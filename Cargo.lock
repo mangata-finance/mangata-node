@@ -1103,7 +1103,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/mangata-finance/substrate?branch=mangata-dev)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "log",
  "mangata-support",
  "mangata-types",
@@ -3496,6 +3496,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ebdb29d2ea9ed0083cd8cece49bbd968021bd99b0849edb4a9a7ee0fdf6a4e0"
 
 [[package]]
+name = "hex-literal"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fe2267d4ed49bc07b63801559be28c718ea06c4738b7a03c94df7386d2cde46"
+
+[[package]]
 name = "hkdf"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4059,7 +4065,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.40)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.3.4",
  "kusama-runtime-constants",
  "log",
  "pallet-authority-discovery",
@@ -4903,7 +4909,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/mangata-finance/substrate?branch=mangata-dev)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "log",
  "mangata-support",
  "mangata-types",
@@ -4997,7 +5003,7 @@ dependencies = [
  "frame-system-rpc-runtime-api",
  "futures",
  "hex",
- "hex-literal",
+ "hex-literal 0.4.1",
  "jsonrpsee",
  "log",
  "mangata-kusama-runtime",
@@ -5090,7 +5096,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/mangata-finance/substrate?branch=mangata-dev)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "log",
  "mangata-support",
  "mangata-types",
@@ -6419,7 +6425,7 @@ dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "hex-literal",
+ "hex-literal 0.4.1",
  "lazy_static",
  "log",
  "mangata-support",
@@ -6550,7 +6556,7 @@ dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "hex-literal",
+ "hex-literal 0.4.1",
  "lazy_static",
  "log",
  "mangata-support",
@@ -6612,7 +6618,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "lazy_static",
  "log",
  "mangata-support",
@@ -6780,7 +6786,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "lazy_static",
  "libm 0.2.1",
  "log",
@@ -7340,7 +7346,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.4.1",
  "lazy_static",
  "libm 0.2.1",
  "log",
@@ -8463,7 +8469,7 @@ version = "0.9.40"
 source = "git+https://github.com/mangata-finance//polkadot?branch=mangata-dev#c484ce03b879191739e1de2333ab04667a2ffb44"
 dependencies = [
  "bitvec",
- "hex-literal",
+ "hex-literal 0.3.4",
  "parity-scale-codec",
  "polkadot-core-primitives",
  "polkadot-parachain",
@@ -8529,7 +8535,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.40)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.3.4",
  "log",
  "pallet-authority-discovery",
  "pallet-authorship",
@@ -8731,7 +8737,7 @@ dependencies = [
  "frame-support",
  "frame-system-rpc-runtime-api",
  "futures",
- "hex-literal",
+ "hex-literal 0.3.4",
  "kusama-runtime",
  "kusama-runtime-constants",
  "kvdb",
@@ -9629,7 +9635,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.40)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.3.4",
  "log",
  "pallet-authority-discovery",
  "pallet-authorship",
@@ -14269,7 +14275,7 @@ dependencies = [
  "frame-system-benchmarking 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.40)",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
- "hex-literal",
+ "hex-literal 0.3.4",
  "log",
  "pallet-authority-discovery",
  "pallet-authorship",
