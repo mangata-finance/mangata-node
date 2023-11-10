@@ -12,21 +12,27 @@ on:
         description: "Name of the parachain docker reference"
         type: string
         required: false
-        default: "mangatasolutions/mangata-node:latest"
+        default: "mangatasolutions/mangata-node:develop"
       skipBuild:
         description: "Skip build phase"
         type: string
         required: false
-        default: 'false'
+        default: 'true'
       globalVersion:
         description: "Set Mangata node version."
         type: string
         required: true
+        default: 'develop'
       mangataTypesVersion:
         description: "Set @mangata-finance/types version"
         type: string
         default: ""
         required: false
+      withChopsticks:
+        description: "Run with chopsticks"
+        type: bool
+        default: false
+        required: true
   workflow_call:
     inputs:
       e2eBranch:
@@ -56,6 +62,55 @@ permissions:
   checks: write
 
 jobs:
+  matrix-setup:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: matrix-to-run
+        id: matrixToRun
+        run: |
+          {
+          MATRIX_PARAMS_COMBINATIONS='
+              {"command": "yarn test-parallel --max-workers=10", "fast": false },
+              {"command": "yarn test-sequential-no-bootstrap", "fast": false },
+              {"command": "yarn test-seqgasless", "fast": false },
+              {"command": "yarn test-maintenance", "fast": true },
+              {"command": "yarn test-bootstrap", "fast": false },
+              {"command": "yarn test-rewards-bootstrap", "fast": false },
+              {"command": "yarn test-parallel-autocompound", "fast": true },
+              {"command": "yarn test-sequential-autocompound", "fast": true },
+              {"command": "yarn test-poolliquidity", "fast": true },
+              {"command": "yarn test-governance", "fast": true },
+              {"command": "yarn test-multiswap", "fast": false },
+              {"command": "yarn test-experimentalStaking", "fast": true },
+              {"command": "yarn test-crowdloan", "fast": false },
+              {"command": "yarn test-sdk", "fast": true },
+          '
+          if [[ "${{ github.event_name }}" == "pull_request" ]] || [[  "${{ inputs.withChopsticks }}" == "true" ]] ; then
+            MATRIX_PARAMS_COMBINATIONS='
+              {"command": "yarn test-parallel-chops --max-workers=1", "fast": false },
+              {"command": "yarn test-parallel-skipped-chops --max-workers=10", "fast": false },
+              {"command": "yarn test-sequential-no-bootstrap", "fast": false },
+              {"command": "yarn test-seqgasless", "fast": false },
+              {"command": "yarn test-maintenance", "fast": true },
+              {"command": "yarn test-bootstrap-chops", "fast": false },
+              {"command": "yarn test-rewards-bootstrap", "fast": false },
+              {"command": "yarn test-parallel-autocompound", "fast": true },
+              {"command": "yarn test-sequential-autocompound", "fast": true },
+              {"command": "yarn test-poolliquidity", "fast": true },
+              {"command": "yarn test-governance", "fast": true },
+              {"command": "yarn test-multiswap", "fast": false },
+              {"command": "yarn test-experimentalStaking", "fast": true },
+              {"command": "yarn test-crowdloan", "fast": false },
+              {"command": "yarn test-sdk", "fast": true },
+          '
+          fi
+          echo "matrix<<EOF
+          {\"include\":[$MATRIX_PARAMS_COMBINATIONS]}"
+          echo EOF 
+          } >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ steps.matrixToRun.outputs.matrix }}
+      
   setup-report:
     runs-on: [ubuntu-latest]
     outputs:
@@ -87,42 +142,12 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
         id: setTestRun
-
-
+    
   e2e-test-matrix:
-    needs: [setup-report]
+    needs: [setup-report, matrix-setup]
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - command: "yarn test-parallel --max-workers=10"
-            fast: false
-          - command: "yarn test-sequential-no-bootstrap"
-            fast: false
-          - command: "yarn test-seqgasless"
-            fast: false
-          - command: "yarn test-maintenance"
-            fast: true
-          - command: "yarn test-bootstrap"
-            fast: false
-          - command: "yarn test-rewards-bootstrap"
-            fast: false
-          - command: "yarn test-parallel-autocompound"
-            fast: true
-          - command: "yarn test-sequential-autocompound"
-            fast: true
-          - command: "yarn test-poolliquidity"
-            fast: true
-          - command: "yarn test-governance"
-            fast: true
-          - command: "yarn test-multiswap"
-            fast: false
-          - command: "yarn test-experimentalStaking"
-            fast: true
-          - command: "yarn test-crowdloan"
-            fast: false
-          - command: "yarn test-sdk"
-            fast: true
+      matrix: ${{ fromJson(needs.matrix-setup.outputs.matrix) }}
     runs-on: [e2e-gke]
     timeout-minutes: 180
     env:
