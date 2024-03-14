@@ -89,7 +89,7 @@ jobs:
         id: setTestRun
 
 
-  e2e-test-matrix:
+  e2e-tm:
     needs: [setup-report]
     strategy:
       fail-fast: false
@@ -107,6 +107,8 @@ jobs:
             fast: false
           - command: "yarn test-rewards-bootstrap"
             fast: false
+          - command: "yarn test-claiming-bootstrap"
+            fast: false
           - command: "yarn test-parallel-autocompound"
             fast: true
           - command: "yarn test-sequential-autocompound"
@@ -114,6 +116,8 @@ jobs:
           - command: "yarn test-poolliquidity"
             fast: true
           - command: "yarn test-governance"
+            fast: true
+          - command: "yarn test-governance-maintenance"
             fast: true
           - command: "yarn test-multiswap"
             fast: false
@@ -290,7 +294,7 @@ jobs:
           docker-compose down -v
 
   test-complete:
-    needs: [setup-report, e2e-test-matrix]
+    needs: [setup-report, e2e-tm]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -308,7 +312,7 @@ jobs:
         continue-on-error: true
 
   slack-notify-nook:
-    needs: [e2e-test-matrix]
+    needs: [e2e-tm]
     if: failure()
     runs-on: ubuntu-latest
     steps:
